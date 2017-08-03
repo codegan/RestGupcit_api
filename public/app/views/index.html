@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/assets/images/logo/logo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Cascade Style Sheets -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-3.3.7-dist/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/rotating-card.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/uslugi-tab.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/carousel.css">
+    <!--Java script files-->
+    <script src="assets/js/rotation-card.js"></script>
+
+    <!-- Main Angular Files -->
+      <script src="assets/js/angular-1.4.4/angular.js"></script>
+      <script src="assets/js/angular-1.4.4/angular-route.js"></script>
+      <script src="assets/js/angular-1.4.4/angular-animate.js"></script>
+    <!-- Angular config/routes -->
+      <script src="app/app.js"></script>
+      <script src="app/routes.js"></script>
+    <!-- Angular Controllers -->
+      <script src="app/controllers/userCtrl.js"></script>
+      <script src="app/controllers/mainCtrl.js"></script>
+      <script src="app/controllers/emailCtrl.js"></script>
+      <script src="app/controllers/managementCtrl.js"></script>
+      <script src="app/controllers/newsCtrl.js"></script>
+      <script src="https://tpc.googlesyndication.com/pagead/gadgets/html5/api/exitapi.js"></script>
+    <!-- Angular Services -->
+      <script src="app/services/userServices.js"></script>
+      <script src="app/services/authServices.js"></script>
+      <script src="app/services/newsServices.js"></script>
+    <title>ГУП "Центр информационных технологии"</title>
+  </head>
+
+  <body ng-app="userApp" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
+
+    <div id="navig" class="navbar-wrapper">
+      <div class="container">
+
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">ГУП "ЦИТ"</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Главная</a></li>
+            <li><a href="/news">События</a></li>
+            <li><a href="/home#ocentre">О центре</a></li>
+            <li><a href="/home#contacts">Контакты</a></li>
+            <li><a ng-show="main.isLoggedIn && main.authorized" href="/management">Управление</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" ng-show="main.isLoggedIn" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Профиль<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><p ng-show="main.isLoggedIn" class="navbar-text">Вы вошли как {{ main.username }}</p></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a ng-show="main.isLoggedIn" href="/profile">Профиль</a></li>
+                  <li><a ng-show="main.isLoggedIn" ng-click="main.logout();" href="#">Выход</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a ng-show="!main.isLoggedIn" href="/login">Вход</a></li>
+              <li><a ng-show="!main.isLoggedIn" href="/register">Регистрация</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+          </div>
+        </nav>
+
+      </div>
+    </div>
+
+    <div class="theme-showcase" role="main">
+
+      <div ng-view></div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" ng-click="main.endSession();" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">{{main.modalHeader}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{main.modalBody}}</p>
+                            <div ng-show="main.hideButton" class="dizzy-gillespie"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" ng-hide="main.hideButton" ng-click="main.renewSession();" class="btn btn-default" data-dismiss="modal">Yes</button>
+                            <button type="button" ng-hide="main.hideButton" ng-click="main.endSession();" class="btn btn-danger" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+    <div class="container">
+    <!-- FOOTER -->
+      <footer>
+        <p class="pull-right"><a href="#navig">Вверх</a></p>
+        <p>&copy; 2008-2017 ГУП "Центр информационных технологии"</p>
+		<div class="dizzy-gillespie"></div>
+      </footer>
+    </div>
+	<script src="assets/js/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="assets/js/bootstrap-3.3.7-dist/bootstrap.js"></script>
+  </body>
+</html>
