@@ -24,7 +24,31 @@ var client = nodemailer.createTransport(sgTransport(options));
 
 
 
+router.post('/mail', function(req, res){
+  if(req.body.mail_from != null){
+    var email = {
+      from: 'zayavki@gupcit.ru',
+      to: 'elbukaevzaur@gmail.com',
+      subject: req.body.theme,
+          html: 'Адрес электронной почты: ' + req.body.mail_from + '<br>'+
+          'Имя: '+req.body.name +'<br>'+
+          'Текст заявки: '+ req.body.text,
+          //html: req.body.title
+    };
 
+    client.sendMail(email, function(err, info){
+        if (err){
+          console.log(err);
+        }
+        else {
+          console.log('Message send: ' + info.response);
+        }
+    });
+  }else {
+    res.json({message: 'не задан title'})
+  }
+
+});
 
 
 
@@ -100,7 +124,7 @@ var client = nodemailer.createTransport(sgTransport(options));
 			}else{
 				res.json({ success: false, message: 'Valid username.'});
 			}
-			
+
 		});
 	});
 	router.post('/checkemail', function(req, res){
@@ -111,7 +135,7 @@ var client = nodemailer.createTransport(sgTransport(options));
 			}else{
 				res.json({ success: false, message: 'Valid email.'});
 			}
-			
+
 		});
 	});
 
@@ -343,7 +367,7 @@ var client = nodemailer.createTransport(sgTransport(options));
             if (err) throw err;
             if (req.body.password == null || req.body.password == '') {
                 res.json({ success: false, message: 'Password not provided.' });
-                
+
             } else {
                 user.password = req.body.password;
                 user.resettoken = false;
@@ -386,7 +410,7 @@ var client = nodemailer.createTransport(sgTransport(options));
 
 			jwt.verify(token, secret, function(err, decoded){
 				if (err) {
-					res.json({success: false, message: 'Token invalid'}); 
+					res.json({success: false, message: 'Token invalid'});
 				}else{
 					req.decoded = decoded;
 					next();
@@ -434,7 +458,7 @@ var client = nodemailer.createTransport(sgTransport(options));
                 if (!mainUser) {
                     res.json({ success: false, message: 'No user found' }); // Return error
                 } else {
-                    // Check if user has editing/deleting privileges 
+                    // Check if user has editing/deleting privileges
                     if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
                         // Check if users were retrieved from database
                         if (!users) {
@@ -486,9 +510,9 @@ var client = nodemailer.createTransport(sgTransport(options));
     });
 
     router.get('/edit/:id', function(req, res){
-        var editUser = req.params.id; 
+        var editUser = req.params.id;
         User.findOne({username: req.decoded.username}, function(err, mainUser){
-            if(err) throw err; 
+            if(err) throw err;
             if(!mainUser){
                 res.json({success: false, message: 'no user found.'});
             }else{
@@ -598,7 +622,7 @@ var client = nodemailer.createTransport(sgTransport(options));
                                                 if(err){
                                                     console.log(err);
                                                 }else{
-                                                    res.json({success: true, message: 'Permissions have been updated.'}); 
+                                                    res.json({success: true, message: 'Permissions have been updated.'});
                                                 }
                                             });
                                         }
@@ -608,7 +632,7 @@ var client = nodemailer.createTransport(sgTransport(options));
                                                 if(err){
                                                     console.log(err);
                                                 }else{
-                                                    res.json({success: true, message: 'Permissions have been updated.'}); 
+                                                    res.json({success: true, message: 'Permissions have been updated.'});
                                                 }
                                             });
                                     }
@@ -622,7 +646,7 @@ var client = nodemailer.createTransport(sgTransport(options));
                                                 if(err){
                                                     console.log(err);
                                                 }else{
-                                                    res.json({success: true, message: 'Permissions have been updated.'}); 
+                                                    res.json({success: true, message: 'Permissions have been updated.'});
                                                 }
                                             });
                                         }
@@ -632,7 +656,7 @@ var client = nodemailer.createTransport(sgTransport(options));
                                                 if(err){
                                                     console.log(err);
                                                 }else{
-                                                    res.json({success: true, message: 'Permissions have been updated.'}); 
+                                                    res.json({success: true, message: 'Permissions have been updated.'});
                                                 }
                                             });
                                     }
@@ -644,7 +668,7 @@ var client = nodemailer.createTransport(sgTransport(options));
                                                 if(err){
                                                     console.log(err);
                                                 }else{
-                                                    res.json({success: true, message: 'Permissions have been updated.'}); 
+                                                    res.json({success: true, message: 'Permissions have been updated.'});
                                                 }
                                             });
                                     }else{
