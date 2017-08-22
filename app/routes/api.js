@@ -9,7 +9,7 @@ var cors = require('cors');
 module.exports = function(router) {
 
 var corsOptions = {
-  origin: 'http://localhost:8081',
+  origin: 'http://localhost:80',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
@@ -30,8 +30,9 @@ router.post('/mail', function(req, res){
       from: 'zayavki@gupcit.ru',
       to: 'elbukaevzaur@gmail.com',
       subject: req.body.theme,
-          html: 'Адрес электронной почты: ' + req.body.mail_from + '<br>'+
-          'Имя: '+req.body.name +'<br>'+
+          html: 'Имя: ' + req.body.name + '<br>'+
+          'Адрес электронной почты: '+req.body.mail_from +'<br>'+
+          'Номер телефона: '+req.body.phone +'<br>'+
           'Текст заявки: '+ req.body.text,
           //html: req.body.title
     };
@@ -44,6 +45,7 @@ router.post('/mail', function(req, res){
           console.log('Message send: ' + info.response);
         }
     });
+    res.json({ success: true, message: 'Заявка отправлена!' });
   }else {
     res.json({message: 'не задан title'})
   }
