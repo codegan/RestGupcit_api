@@ -484,8 +484,8 @@ router.post('/mail', function(req, res){
                 });
     });
 
-    router.get('/news/:_id', cors(corsOptions), function(req, res) {
-                News.findOne({_id: req.params._id}, function(err, news) {
+    router.get('/news/:id', cors(corsOptions), function(req, res) {
+                News.findOne({_id: req.params.id}, function(err, news) {
                     if (err) throw err;
                     res.json({news: news});
                 });
