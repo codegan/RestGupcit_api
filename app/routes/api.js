@@ -24,14 +24,14 @@ var client = nodemailer.createTransport(sgTransport(options));
 
 
 
-router.post('/mail', function(req, res){
-  if(req.body.mail_from != null){
+router.post('/mail', cors(corsOptions), function(req, res){
+  if(req.body.email != null){
     var email = {
       from: 'zayavki@gupcit.ru',
       to: 'elbukaevzaur@gmail.com',
       subject: req.body.theme,
           html: 'Имя: ' + req.body.name + '<br>'+
-          'Адрес электронной почты: '+req.body.mail_from +'<br>'+
+          'Адрес электронной почты: '+req.body.email +'<br>'+
           'Номер телефона: '+req.body.phone +'<br>'+
           'Текст заявки: '+ req.body.text,
           //html: req.body.title
