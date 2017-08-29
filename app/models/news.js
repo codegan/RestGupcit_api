@@ -10,7 +10,12 @@ var NewsSchema = new Schema({
   text: {
     type: String
   },
-  date: String
+  date: {
+    type: String
+  },
+  baseImg: {
+    type: String
+  }
 });
 
 module.exports = mongoose.model('News', NewsSchema);

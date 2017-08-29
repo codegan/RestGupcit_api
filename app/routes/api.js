@@ -8,10 +8,17 @@ var cors = require('cors');
 
 module.exports = function(router) {
 
-var corsOptions = {
-  origin: 'http://localhost',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+  var whitelist = ['http://localhost', 'http://gupcit.ru', 'http://192.168.2.195']
+  var corsOptions = {
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
+    optionsSuccessStatus: 200
+  }
 
 var options = {
   auth: {
