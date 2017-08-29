@@ -32,7 +32,17 @@ var client = nodemailer.createTransport(sgTransport(options));
 
 
 router.post('/mail', cors(corsOptions), function(req, res){
-  if(req.body.email != null){
+  if(req.body.email == null){
+    res.json({message: 'не задан почтовый адрес'});
+  }else if (req.body.phone == null) {
+    res.json({message: 'не задан номер телефона'});
+  }else if (req.body.theme == null) {
+    res.json({message: 'не задана тема'});
+  }else if (req.body.text == null) {
+    res.json({message: 'не заполнен текст сообщения'});
+  }else if (req.body.name == null) {
+    res.json({message: 'не задано имя'});
+  }else {
     var email = {
       from: 'zayavki@gupcit.ru',
       to: 'elbukaevzaur@gmail.com',
@@ -53,10 +63,7 @@ router.post('/mail', cors(corsOptions), function(req, res){
         }
     });
     res.json({ success: true, message: 'Заявка отправлена!' });
-  }else {
-    res.json({message: 'не задан title'})
   }
-
 });
 
 
